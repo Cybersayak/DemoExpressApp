@@ -23,6 +23,12 @@ app.get("/api/posts", (req, res) => {
   res.json(posts);
 });
 
+// Searching Post through ID in Routes
+app.get("/api/posts/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  res.json(posts.filter((posts) => posts.id === id));
+});;
+
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "templates", "index.html"));
 });
