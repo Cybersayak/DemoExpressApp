@@ -20,7 +20,14 @@ let posts = [
 
 // JSON response in Routes 
 app.get("/api/posts", (req, res) => {
-  res.json(posts);
+  // console.log(req.query);
+  const limit = parseInt(req.query.limit);
+
+  if (!isNaN(limit) && limit > 0){
+    res.json(posts.slice(0, limit));
+  } else {
+    res.json(posts);
+  }
 });
 
 // Searching Post through ID in Routes
