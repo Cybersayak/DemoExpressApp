@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import titles from './routes/titles.js';
 import { fileURLToPath } from "url";
 
 // Fix __dirname for ES modules
@@ -18,23 +19,23 @@ let posts = [
   { id: 3, name: "Prince Kumar" },
 ];
 
-// JSON response in Routes 
+// JSON response in Routes
 app.get("/api/posts", (req, res) => {
   // console.log(req.query);
   const limit = parseInt(req.query.limit);
 
-  if (!isNaN(limit) && limit > 0){
-    res.json(posts.slice(0, limit));
+  if (!isNaN(limit) && limit > 0) {
+    res.status(200).json(posts.slice(0, limit));
   } else {
-    res.json(posts);
+    res.status(200).json(posts);
   }
 });
 
-// Searching Post through ID in Routes
+// get a single Post through ID in Routes
 app.get("/api/posts/:id", (req, res) => {
   const id = parseInt(req.params.id);
   res.json(posts.filter((posts) => posts.id === id));
-});;
+});
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "templates", "index.html"));
@@ -44,6 +45,13 @@ app.get("/about", (req, res) => {
   res.sendFile(path.join(__dirname, "templates", "about.html"));
 });
 
+
+// Routes of titles
+app.use("/api/titles", titles);
+
+
 app.listen(3000, () => {
   console.log("Express server listening on port 3000");
 });
+
+
